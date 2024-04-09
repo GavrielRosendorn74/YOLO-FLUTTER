@@ -106,14 +106,17 @@ class _UltralyticsYoloCameraPreviewState
 
               switch (widget.predictor.runtimeType) {
                 case ObjectDetector:
-                  return StreamBuilder(
+                  if (widget.boundingBoxesColorList.isNotEmpty) {
+                    return StreamBuilder(
                     stream: (widget.predictor! as ObjectDetector)
                         .detectionResultStream,
                     builder: (
                       BuildContext context,
                       AsyncSnapshot<List<DetectedObject?>?> snapshot,
                     ) {
-                      if (snapshot.data == null) return Container();
+                      if (snapshot.data == null || widget.boundingBoxesColorList.isEmpty) {
+                        return Container();
+                      }
 
                       return CustomPaint(
                         painter: ObjectDetectorPainter(
@@ -124,6 +127,9 @@ class _UltralyticsYoloCameraPreviewState
                       );
                     },
                   );
+                  } else {
+                    return Container();
+                  }
                 case ImageClassifier:
                   return widget.classificationOverlay ??
                       StreamBuilder(
