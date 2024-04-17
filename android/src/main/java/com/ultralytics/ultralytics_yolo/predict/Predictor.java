@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class Predictor {
-public static final int INPUT_SIZE = 320;
+public static final int INPUT_SIZE = 640;
         protected final Context context;
     public final ArrayList<String> labels = new ArrayList<>();
 
